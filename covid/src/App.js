@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import './App.css'
 import { FormControl,Select, MenuItem } from '@material-ui/core';
+import InfoBox from './InfoBox'
 
 const App = () => {
 
@@ -33,12 +34,15 @@ const App = () => {
 
     setCountry(countryCode)
   }
-  
+
   return (
     <div className="App">
+
       {/* Header */}
       <div className="app__header">
         <h1>COVID-19 TRACKER</h1>
+
+         {/* Title + Select input dropdown field */}
         <FormControl className="app__dropdown">
           <Select variant ="outlined" onChange={onCountryChange} value={country} >
             {/* Loopthrough all of the countries and show all the countries */}
@@ -51,13 +55,19 @@ const App = () => {
            </Select>
         </FormControl>
       </div>
-     
-      
-      {/* Title + Select input dropdown field */}
+      <div className='app__stats'> 
+        {/* InforBoxes */}
+        <InfoBox title="Corona Virus Cases" cases={12345} total={2000} />
 
-      {/* InforBoxes */}
-      {/* InforBoxes */}
-      {/* InforBoxes */}
+        <InfoBox title="Recovered" cases={123} total={3000}/>
+
+        <InfoBox title="Deaths"  cases={1235} total={4000}/>
+            
+      </div>
+      
+     
+
+      
 
       {/* Table */}
       {/* Graph */}
