@@ -5,6 +5,7 @@ import { FormControl,Select, MenuItem } from '@material-ui/core';
 const App = () => {
 
  const [countries, setCountries] = useState([])
+ const [country, setCountry] = useState('worldwide')
  
   useEffect(()=> {
     // The code inside here will run once
@@ -27,27 +28,27 @@ const App = () => {
     getCountriesData()
   },[])
 
+  const onCountryChange = (event) => {
+    const countryCode = event.target.value;
+
+    setCountry(countryCode)
+  }
+  
   return (
     <div className="App">
       {/* Header */}
       <div className="app__header">
         <h1>COVID-19 TRACKER</h1>
         <FormControl className="app__dropdown">
-          <Select variant ="outlined" value="abc">
-
+          <Select variant ="outlined" onChange={onCountryChange} value={country} >
+            {/* Loopthrough all of the countries and show all the countries */}
+            <MenuItem value='worldwide'> Worldwide </MenuItem>
             {
               countries.map(country => (
               <MenuItem value={country.value}> {country.name} </MenuItem>
               ))
             }
            </Select>
-          {/* Loopthrough all of the countries and show all the countries */}
-          {/* <Select variant ="outlined" value="abc">
-            <MenuItem value='worldwide'> Worlwide </MenuItem>
-            <MenuItem value='worldwide'> Option Two </MenuItem>
-            <MenuItem value='worldwide'> Option Three </MenuItem>
-            <MenuItem value='worldwide'> Option Four </MenuItem>
-          </Select> */}
         </FormControl>
       </div>
      
