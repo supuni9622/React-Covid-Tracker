@@ -2,13 +2,15 @@ import React, {useState, useEffect} from 'react'
 import './App.css'
 import { FormControl,Select, MenuItem, Card, CardContent} from '@material-ui/core';
 import InfoBox from './InfoBox';
-import Map from './Map'
+import Map from './Map';
+import Table from './Table'
 
 const App = () => {
 
  const [countries, setCountries] = useState([])
  const [country, setCountry] = useState('worldwide')
  const [countryInfo, setCountryInfo] = useState({})
+ const [tableData, setTableData] = useState([])
 
   // To get worlwide data
   useEffect(() => {
@@ -34,6 +36,7 @@ const App = () => {
             value: country.countryInfo.iso2 // USA, UK
           }))
 
+          setTableData(data)
           setCountries(countries)
       })
     }
@@ -102,6 +105,7 @@ const App = () => {
         <CardContent>
           <h3>Live Cases by Country</h3>
            {/* Table */}
+           <Table countries={tableData} />
            <h3> Worldwide New Cases </h3>
            {/* Graph */}
         </CardContent>
