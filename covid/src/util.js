@@ -5,7 +5,7 @@ import {Circle, Popup} from 'react-leaflet';
 // Careate colors dictionary
 const casesTypeColors = {
     cases: {
-        hex: '#cc1034',
+        hex: '#ff7700',
         // rgb: 'rgb(204, 16, 52',
         // half_op: 'rgba(125,16,52,0.5)',
         multiplier: 800
@@ -17,7 +17,7 @@ const casesTypeColors = {
         multiplier: 1200
     },
     deaths: {
-        hex: '#fb4443',
+        hex: '#cc1034',
         // rgb: 'rgb(251, 68, 67)',
         // half_op: 'rgba(251, 68, 67, 0.5)',
         multiplier: 2000
@@ -42,6 +42,8 @@ export const sortData = (data) => {
     // Shortest way 
      return sortedData.sort((a,b) => a.cases > b.cases ? -1 : 1);
 }
+
+export const prettyPrintStat = (stat) => stat ? `+${numeral(stat).format("0.0a")}` : null
 
 // Draw circles on the the map with interactive tooltip
  export const showDataOnMap = (data, casesType ='cases') => (

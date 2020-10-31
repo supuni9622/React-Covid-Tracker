@@ -4,7 +4,7 @@ import { FormControl,Select, MenuItem, Card, CardContent} from '@material-ui/cor
 import InfoBox from './InfoBox';
 import Map from './Map';
 import Table from './Table';
-import {sortData} from './util';
+import {sortData, prettyPrintStat} from './util';
 import LineGraph from './LineGraph';
 
 const App = () => {
@@ -16,6 +16,8 @@ const App = () => {
  const [mapCenter, setMapCenter] = useState({ lat: 34.80746, lng: -40.4796})
  const [mapZoom, setMapZoom] = useState(3)
  const [mapCountries, setMapCountries] = useState([])
+ const [casesType, setCasesType] = useState('cases')
+
 
   // To get worlwide data
   useEffect(() => {
@@ -91,26 +93,36 @@ const App = () => {
         <div className='app__stats'> 
           {/* InforBoxes */}
           <InfoBox 
-            title="Corona Virus Cases" 
-            cases={countryInfo.todayCases} 
-            total={countryInfo.cases} 
+            isOrange
+            active={casesType === 'cases'}
+            onClick={(e) => setCasesType('cases')}
+            title="Today Corona Virus Cases" 
+            cases={prettyPrintStat(countryInfo.todayCases)}
+            total={prettyPrintStat(countryInfo.cases)} 
           />
 
           <InfoBox 
-            title="Recovered" 
-            cases={countryInfo.todayRecovered} 
-            total={countryInfo.recovered}
+            isGreen
+            active={casesType === 'recovered'}
+            onClick={(e) => setCasesType('recovered')}
+            title="Today Recovered" 
+            cases={prettyPrintStat(countryInfo.todayRecovered)} 
+            total={prettyPrintStat(countryInfo.recovered)}
           />
 
-          <InfoBox 
-            title="Deaths"  
-            cases={countryInfo.todayDeaths} 
-            total={countryInfo.deaths}
+          <InfoBox
+            isRed
+            active={casesType === 'deaths'} 
+            onClick={(e) => setCasesType('deaths')}
+            title="Today Deaths"  
+            cases={prettyPrintStat(countryInfo.todayDeaths)} 
+            total={prettyPrintStat(countryInfo.deaths)}
           />     
         </div> 
 
         {/* Map */}
         <Map 
+          casesType ={casesType}
           center={mapCenter}
           zoom = {mapZoom}
           countries = {mapCountries}
@@ -122,9 +134,9 @@ const App = () => {
           <h3 style={{marginBottom:'10px'}}>Live Cases by Country</h3>
            {/* Table */}
            <Table countries={tableData} />
-           <h3 style={{marginBottom:'20px'}}> Worldwide New Cases </h3>
+           <h3 style={{marginBottom:'20px'}}> Worldwide new {casesType} </h3>
            {/* Graph */}
-           <LineGraph/>
+           <LineGraph className='app__graph' casesType={casesType}/>
         </CardContent>
       </Card>     
     </div>

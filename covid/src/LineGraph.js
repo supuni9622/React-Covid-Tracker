@@ -49,29 +49,14 @@ const options = {
     }
 }
 
-const LineGraph = ({casesType="cases"}) => {
+const LineGraph = ({casesType="cases", ...props}) => {
 
     const [data, setData] = useState({})
-
-    useEffect(() => {
-        const fetchData = async () => {
-           await fetch('https://disease.sh/v3/covid-19/historical/all')
-            .then(response => response.json())
-            .then(data => {
-                console.log('LineChart' + data)
-                let chartData = buildChartData(data, 'cases')
-                setData(chartData)
-            })
-        }
-
-        fetchData()
-        
-    },[casesType]);
 
     const buildChartData = (data, casesType)=> {
         const chartData = [];
         let lastDataPoint;
-
+    
        for(let date in data.cases){
             if(lastDataPoint) {
                 const newDataPoint = {
@@ -85,8 +70,22 @@ const LineGraph = ({casesType="cases"}) => {
         return chartData
     }
 
+    useEffect(() => {
+        const fetchData = async () => {
+           await fetch('https://disease.sh/v3/covid-19/historical/all')
+            .then(response => response.json())
+            .then(data => {
+                let chartData = buildChartData(data, casesType)
+                setData(chartData)
+            })
+        }
+
+        fetchData()
+        
+    },[casesType]);
+
     return (
-        <div>
+        <div className={props.className}>
             {/* Following 'data?.length' is similar to data && data.length ? */}
             {data?.length > 0 && (
             <Line
