@@ -4,7 +4,8 @@ import { FormControl,Select, MenuItem, Card, CardContent} from '@material-ui/cor
 import InfoBox from './InfoBox';
 import Map from './Map';
 import Table from './Table';
-import {sortData} from './util'
+import {sortData} from './util';
+import LineGraph from './LineGraph'
 
 const App = () => {
 
@@ -40,7 +41,7 @@ const App = () => {
           // Sorted data
           const sortedData = sortData(data)
           setTableData(sortedData)
-          
+
           setCountries(countries)
       })
     }
@@ -111,6 +112,8 @@ const App = () => {
            {/* Table */}
            <Table countries={tableData} />
            <h3> Worldwide New Cases </h3>
+           <LineGraph/>
+
            {/* Graph */}
         </CardContent>
       </Card>     
