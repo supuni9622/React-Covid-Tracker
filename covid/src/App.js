@@ -5,7 +5,7 @@ import InfoBox from './InfoBox';
 import Map from './Map';
 import Table from './Table';
 import {sortData} from './util';
-import LineGraph from './LineGraph'
+import LineGraph from './LineGraph';
 
 const App = () => {
 
@@ -13,6 +13,9 @@ const App = () => {
  const [country, setCountry] = useState('worldwide')
  const [countryInfo, setCountryInfo] = useState({})
  const [tableData, setTableData] = useState([])
+ const [mapCenter, setMapCenter] = useState({ lat: 34.80746, lng: -40.4796})
+ const [mapZoom, setMapZoom] = useState(3)
+ const [mapCountries, setMapCountries] = useState([])
 
   // To get worlwide data
   useEffect(() => {
@@ -41,7 +44,7 @@ const App = () => {
           // Sorted data
           const sortedData = sortData(data)
           setTableData(sortedData)
-
+          setMapCountries(data)
           setCountries(countries)
       })
     }
@@ -58,6 +61,10 @@ const App = () => {
       .then(data => {
         setCountry(countryCode)
         setCountryInfo(data)
+
+        // Map properties 
+        setMapCenter([data.countryInfo.lat, data.countryInfo.long])
+        setMapZoom(4)
       })
   }
 
@@ -103,7 +110,11 @@ const App = () => {
         </div> 
 
         {/* Map */}
-        <Map/>   
+        <Map 
+          center={mapCenter}
+          zoom = {mapZoom}
+          countries = {mapCountries}
+        />   
       </div>
       
       <Card className="app__right">
@@ -112,9 +123,8 @@ const App = () => {
            {/* Table */}
            <Table countries={tableData} />
            <h3> Worldwide New Cases </h3>
-           <LineGraph/>
-
            {/* Graph */}
+           <LineGraph/>
         </CardContent>
       </Card>     
     </div>
