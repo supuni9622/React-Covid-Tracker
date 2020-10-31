@@ -119,10 +119,10 @@ const App = () => {
       
       <Card className="app__right">
         <CardContent>
-          <h3>Live Cases by Country</h3>
+          <h3 style={{marginBottom:'10px'}}>Live Cases by Country</h3>
            {/* Table */}
            <Table countries={tableData} />
-           <h3> Worldwide New Cases </h3>
+           <h3 style={{marginBottom:'20px'}}> Worldwide New Cases </h3>
            {/* Graph */}
            <LineGraph/>
         </CardContent>
